@@ -27,14 +27,14 @@ public class ConnectionsImpl<T> implements Connections<T> {
     public void send(String channel, T msg) {
         Iterator <String> itr = connectionsByChannel.keySet().iterator();
         while(itr.hasNext()) {
-            if(itr.toString()==channel){
+            if(itr.toString()==channel&connectionsByChannel.get(itr)!=null){
                 connectionsByChannel.get(itr).send(msg);
             }
         }
     }
-
     @Override
     public void disconnect(int connectionId) {
+        connectionsById.remove(connectionId);
 
     }
 }
