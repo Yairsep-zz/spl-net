@@ -1,6 +1,6 @@
 package bgu.spl.net.api;
 
-import bgu.spl.net.msgFrames.Frames;
+import bgu.spl.net.Frames.Frames;
 import bgu.spl.net.srv.Connections;
 
 public interface StompMessagingProtocol  {

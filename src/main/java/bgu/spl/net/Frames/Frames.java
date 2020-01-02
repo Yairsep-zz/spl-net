@@ -1,4 +1,4 @@
-package bgu.spl.net.msgFrames;
+package bgu.spl.net.Frames;
 
 public interface Frames {
 
