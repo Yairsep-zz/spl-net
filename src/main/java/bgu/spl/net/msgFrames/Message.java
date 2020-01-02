@@ -1,11 +1,11 @@
 package bgu.spl.net.msgFrames;
 
-public class message implements Frames {
+public class Message implements Frames {
 
     private String destiontionid;
     private int messageid;
 
-    public message(String destiontionid, int messageid) {
+    public Message(String destiontionid, int messageid) {
 
         this.destiontionid = destiontionid;
         this.messageid = messageid;
