@@ -25,6 +25,7 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     @Override
     public void send(String channel, T msg) {
+        //@TODO CHEKCK IF ANOTHER FIELD IS NEEDED...
         Iterator <String> itr = connectionsByChannel.keySet().iterator();
         while(itr.hasNext()) {
             if(itr.toString()==channel&connectionsByChannel.get(itr)!=null){
