@@ -7,8 +7,7 @@ public class User {
     private String name;
     private String password;
     private Vector<String> borrowedBooks;
-    //TODO CHECK IF IS AVAILABLE FIELD IS NECESSETRY
-   // private boolean isActive;
+    private boolean isActive;
 
 
     public User( String name, String password, Vector<String> borrowedBooks) {
@@ -22,6 +21,10 @@ public class User {
         return name;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -31,6 +34,10 @@ public class User {
     }
 
 
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public void setName(String name) {
         this.name = name;

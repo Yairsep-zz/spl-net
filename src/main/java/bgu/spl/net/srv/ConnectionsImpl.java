@@ -6,13 +6,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConnectionsImpl<T> implements Connections<T> {
 
     private ConcurrentHashMap<Integer, ConnectionHandler<T>> connectionsById;
-    private ConcurrentHashMap<String, ConnectionHandler<T>> connectionsByChannel;
-
     public ConnectionsImpl() {
         connectionsById = new ConcurrentHashMap<>();
-        connectionsByChannel=new ConcurrentHashMap<>();
     }
-
 
     public boolean send(int connectionId, T msg) {
         ConnectionHandler<T> temp=connectionsById.get(connectionId);
@@ -26,12 +22,8 @@ public class ConnectionsImpl<T> implements Connections<T> {
     @Override
     public void send(String channel, T msg) {
         //@TODO CHEKCK IF ANOTHER FIELD IS NEEDED...
-        Iterator <String> itr = connectionsByChannel.keySet().iterator();
-        while(itr.hasNext()) {
-            if(itr.toString()==channel&connectionsByChannel.get(itr)!=null){
-                connectionsByChannel.get(itr).send(msg);
-            }
-        }
+
+
     }
     @Override
     public void disconnect(int connectionId) {

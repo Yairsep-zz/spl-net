@@ -1,35 +1,32 @@
 package bgu.spl.net.srv;
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Library {
 
-
     private ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> SubscribersToTopicsMap = new ConcurrentHashMap<>();
-
-    private ConcurrentHashMap<String, User> activeUser=new ConcurrentHashMap<>();
+//    private ConcurrentHashMap<String, User> activeUser=new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, User> allUsers=new ConcurrentHashMap<>();
+
     public Library(ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> subscribersToTopicsMap, ConcurrentHashMap<String, User> activeUser, ConcurrentHashMap<String, User> allUsers) {
         SubscribersToTopicsMap = subscribersToTopicsMap;
-        this.activeUser = activeUser;
+//        this.activeUser = activeUser;
         this.allUsers = allUsers;
     }
 
-
     //Getters
 
-    public User getUser(String id){
-        return allUsers.get(id);
+    public User getUser(String userName){
+        return allUsers.get(userName);
     }
 
     public ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> getSubscribersToTopicsMap() {
         return SubscribersToTopicsMap;
     }
 
-    public ConcurrentHashMap<String, User> getActiveUser() {
-        return activeUser;
-    }
+//    public ConcurrentHashMap<String, User> getActiveUser() {
+//        return activeUser;
+//    }
 
     public ConcurrentHashMap<String, User> getAllUsers() {
         return allUsers;
@@ -55,9 +52,9 @@ public class Library {
 
     //Methods
 
-    public boolean isActive (String userName){
-        return activeUser.containsKey(userName);
-    }
+//    public boolean isActive (String userName){
+//        return activeUser.containsKey(userName);
+//    }
 
 
 
