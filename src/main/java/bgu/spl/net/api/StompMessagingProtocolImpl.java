@@ -20,6 +20,7 @@ public class StompMessagingProtocolImpl implements StompMessagingProtocol {
  //TODO CHECK ABOUT THE TYPE OF THIS PARAMETER
     public void process(Frames message) {
 
+
     }
 
     @Override
