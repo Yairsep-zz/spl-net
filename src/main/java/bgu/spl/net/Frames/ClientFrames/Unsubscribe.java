@@ -38,7 +38,7 @@ public class Unsubscribe implements Frames {
 
     @Override
     public void setConnections(ConnectionsImpl<Frames> connections) {
-
+        this.connections = connections;
     }
 
 

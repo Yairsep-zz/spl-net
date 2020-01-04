@@ -9,11 +9,11 @@ import java.io.Serializable;
 
 public class Message implements Frames {
 
-    //TODO CHECK WHAT IS THE FIELDS
     private String command;
     private String destinationId;
     private int messageId;
     private int subscription;
+    private ConnectionsImpl connections;
 
     public Message(String destinationId, int messageId, int subscription) {
         this.destinationId = destinationId;
@@ -21,35 +21,13 @@ public class Message implements Frames {
         this.subscription = subscription;
     }
 
-
-    public Serializable execute(Object arg) {
-        return null;
-    }
-
     @Override
     public void execute(int connectionId, Library library) {
 
-        //Add Book Message
-        if (command == ""){
-
-        }
-
-        //Borrow Book Message
-        if (command == ""){
-
-        }
-        //Return Book Message
-        if (command == ""){
-
-        }
-        //Genre Book Message
-        if (command == ""){
-
-        }
     }
 
     @Override
     public void setConnections(ConnectionsImpl<Frames> connections) {
-
+        this.connections = connections;
     }
 }

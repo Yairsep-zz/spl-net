@@ -62,7 +62,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
             case "SUBSCRIBE":
                 outputFrame=new Subscribe(output[1].substring(12),output[2].substring(3),output[3].substring(8));
             case "SEND":
-                outputFrame = new Send();
+                outputFrame = new Send(output[1].substring(12),output[3]);
                 break;
         }
 

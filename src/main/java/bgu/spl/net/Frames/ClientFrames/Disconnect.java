@@ -36,7 +36,7 @@ public class Disconnect implements Frames {
     }
     @Override
     public void setConnections(ConnectionsImpl<Frames> connections) {
-
+        this.connections = connections;
     }
 
 

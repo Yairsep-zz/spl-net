@@ -7,6 +7,7 @@ import bgu.spl.net.srv.Library;
 public class ServerReceipt implements Frames {
 
     private String receiptId;
+    private ConnectionsImpl connections;
 
     public ServerReceipt(String receiptId) {
         this.receiptId = receiptId;
@@ -19,6 +20,6 @@ public class ServerReceipt implements Frames {
 
     @Override
     public void setConnections(ConnectionsImpl<Frames> connections) {
-
+        this.connections = connections;
     }
 }

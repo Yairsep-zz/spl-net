@@ -20,7 +20,6 @@ public class StompServer {
                     () ->  new StompMessagingProtocolImpl(library),
                     () ->new MessageEncoderDecoderImpl());
             server.serve();
-
         }
 
         if (args[1] == "reactor") {

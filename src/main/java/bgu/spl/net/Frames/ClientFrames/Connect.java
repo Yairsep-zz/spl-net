@@ -31,9 +31,11 @@ public class Connect implements Frames {
             User newUser = new User(userName, password, new Vector<String>());
             newUser.setActive(true);
             library.getAllUsers().put(userName, newUser);
-            response=new Connected(version, "Login successful");
+//            response=new Connected(version, "Login successful");
+       //     String [] output=Connected.
+
+          //  connections.send(connectionId, response);
             newUser.setActive(true);
-            connections.send(connectionId, response);
         }
 
         //Not a new User:

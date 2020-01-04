@@ -8,6 +8,7 @@ import bgu.spl.net.srv.Library;
 public class Error implements Frames {
 
     private String errorMessage;
+    private ConnectionsImpl connections;
 
     public Error(String errorMessage) {
         this.errorMessage = errorMessage;
@@ -20,6 +21,6 @@ public class Error implements Frames {
 
     @Override
     public void setConnections(ConnectionsImpl<Frames> connections) {
-
+        this.connections = connections;
     }
 }
