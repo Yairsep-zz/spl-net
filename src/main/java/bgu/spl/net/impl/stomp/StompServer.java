@@ -1,8 +1,12 @@
 package bgu.spl.net.impl.stomp;
+import bgu.spl.net.api.MessageEncoderDecoderImpl;
+import bgu.spl.net.api.StompMessagingProtocolImpl;
 import bgu.spl.net.impl.rci.ObjectEncoderDecoder;
 import bgu.spl.net.impl.rci.RemoteCommandInvocationProtocol;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.Server;
+
+import java.util.function.Supplier;
 
 public class StompServer {
 
@@ -12,21 +16,21 @@ public class StompServer {
         int port = Integer.parseInt(args[0]);
 
         if (args[1] == "tpc") {
-            Server.threadPerClient(port,
-                    () -> new RemoteCommandInvocationProtocol<>(library), //protocol factory
-                    ObjectEncoderDecoder::new //message encoder decoder factory
-            ).serve();
+            Server server = Server.threadPerClient(port,
+                    () ->  new StompMessagingProtocolImpl(library),
+                    () ->new MessageEncoderDecoderImpl());
+            server.serve();
+
         }
 
         if (args[1] == "reactor") {
-            Server.reactor(
-                    Runtime.getRuntime().availableProcessors(),
+            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
                     port,
-                    () -> new RemoteCommandInvocationProtocol<>(library), //protocol factory
-                    ObjectEncoderDecoder::new //message encoder decoder factory
-            ).serve();
-
-
+                    () ->new StompMessagingProtocolImpl(library),
+                    () ->new MessageEncoderDecoderImpl());
+            server.serve();
         }
     }
 }
+
+

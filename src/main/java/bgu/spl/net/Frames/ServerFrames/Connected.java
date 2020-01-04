@@ -1,16 +1,18 @@
 package bgu.spl.net.Frames.ServerFrames;
 
 import bgu.spl.net.Frames.Frames;
-import bgu.spl.net.impl.rci.Command;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 
-public class Error implements Frames {
+public class Connected implements Frames {
 
-    private String errorMessage;
+    //TODO CHECK WHAT IS THE FIELDS
+    private String version;
+    private String connectedMessage;
 
-    public Error(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public Connected(String version, String connectedMessage) {
+        this.version = version;
+        this.connectedMessage = connectedMessage;
     }
 
     @Override

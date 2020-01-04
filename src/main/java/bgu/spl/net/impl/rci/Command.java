@@ -6,5 +6,5 @@ import java.io.Serializable;
 
 public interface Command<T> extends Serializable {
 
-    Serializable execute(int connectionId , Library library);
+    Serializable execute(T arg);
 }

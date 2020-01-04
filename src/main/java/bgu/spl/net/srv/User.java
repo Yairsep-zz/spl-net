@@ -9,6 +9,12 @@ public class User {
     private Vector<String> borrowedBooks;
     private boolean isActive;
 
+    public int getId() {
+        return id;
+    }
+
+    private int id;
+
 
     public User( String name, String password, Vector<String> borrowedBooks) {
         this.name = name;

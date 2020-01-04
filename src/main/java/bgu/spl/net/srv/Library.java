@@ -4,15 +4,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Library {
 
-    private ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> SubscribersToTopicsMap = new ConcurrentHashMap<>();
-//    private ConcurrentHashMap<String, User> activeUser=new ConcurrentHashMap<>();
-    private ConcurrentHashMap<String, User> allUsers=new ConcurrentHashMap<>();
+    public ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> SubscribersToTopicsMap;
+    public ConcurrentHashMap<String, User> allUsers;
 
-    public Library(ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> subscribersToTopicsMap, ConcurrentHashMap<String, User> activeUser, ConcurrentHashMap<String, User> allUsers) {
-        SubscribersToTopicsMap = subscribersToTopicsMap;
-//        this.activeUser = activeUser;
-        this.allUsers = allUsers;
+    public ConcurrentHashMap<Integer, User> getConnectionIdMap() {
+        return connectionIdMap;
     }
+
+    public ConcurrentHashMap<Integer, User> connectionIdMap;
+
+    public Library() {
+        this.SubscribersToTopicsMap = new ConcurrentHashMap<>();
+        this.allUsers = new ConcurrentHashMap<>();
+        this.connectionIdMap = new ConcurrentHashMap<>();
+    }
+
 
     //Getters
 
@@ -24,9 +30,6 @@ public class Library {
         return SubscribersToTopicsMap;
     }
 
-//    public ConcurrentHashMap<String, User> getActiveUser() {
-//        return activeUser;
-//    }
 
     public ConcurrentHashMap<String, User> getAllUsers() {
         return allUsers;
@@ -48,14 +51,6 @@ public class Library {
     }
 
     //Setters
-
-
-    //Methods
-
-//    public boolean isActive (String userName){
-//        return activeUser.containsKey(userName);
-//    }
-
 
 
 }

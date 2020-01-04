@@ -11,32 +11,33 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Disconnect implements Frames {
 
-    private String userName;
-    private String password;
-    private int ip;
+    private String receipt;
     private ConnectionsImpl connections;
 
-    public Disconnect(String userName, String password, int ip, ConnectionsImpl connections) {
-        this.userName = userName;
-        this.password = password;
-        this.ip = ip;
-        this.connections = connections;
+    public Disconnect(String receipt) {
+        this.receipt = receipt;
     }
 
     public void execute(int connectionId, Library library) {
         ServerReceipt response;
         //TODO CHECK ABOUT CLOSING THE SERVER SOCKET
-
         //Removing from Library
-        if (library.getUser(userName) != null) {
+        if (library.getConnectionIdMap().get(connectionId)!= null) {
             Iterator<String> topicsIterator = library.getSubscribersToTopicsMap().keySet().iterator();
             while (topicsIterator.hasNext()) {
-                if (library.getSubscribersToTopicsMap().get(topicsIterator).contains(userName)) {
-                    library.getSubscribersToTopicsMap().get(topicsIterator).remove(userName);
+                User tempUser = library.getConnectionIdMap().get(connectionId);
+                if (library.getSubscribersToTopicsMap().get(topicsIterator).contains(tempUser)) {
+                    library.getSubscribersToTopicsMap().get(topicsIterator).remove(tempUser);
                 }
             }
-//            response = new ServerReceipt()
-
+            response = new ServerReceipt(this.receipt);
+            connections.send(connectionId, response);
         }
     }
+    @Override
+    public void setConnections(ConnectionsImpl<Frames> connections) {
+
+    }
+
+
 }
