@@ -1,15 +1,12 @@
 package bgu.spl.net.Frames.ClientFrames;
-import bgu.spl.net.Frames.Frames;
-import bgu.spl.net.Frames.ServerFrames.ServerReceipt;
+import bgu.spl.net.Frames.ServerFrames.Receipt;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
 
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class Disconnect implements Frames {
+public class Disconnect implements ClientFrame {
 
     private String receipt;
     private ConnectionsImpl connections;
@@ -19,7 +16,7 @@ public class Disconnect implements Frames {
     }
 
     public void execute(int connectionId, Library library) {
-        ServerReceipt response;
+        Receipt response;
         //TODO CHECK ABOUT CLOSING THE SERVER SOCKET
         //Removing from Library
         if (library.getConnectionIdMap().get(connectionId)!= null) {
@@ -30,12 +27,12 @@ public class Disconnect implements Frames {
                     library.getSubscribersToTopicsMap().get(topicsIterator).remove(tempUser);
                 }
             }
-            response = new ServerReceipt(this.receipt);
+            response = new Receipt(this.receipt);
             connections.send(connectionId, response);
         }
     }
     @Override
-    public void setConnections(ConnectionsImpl<Frames> connections) {
+    public void setConnections(ConnectionsImpl<ClientFrame> connections) {
         this.connections = connections;
     }
 

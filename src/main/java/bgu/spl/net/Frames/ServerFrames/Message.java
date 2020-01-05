@@ -1,13 +1,8 @@
 package bgu.spl.net.Frames.ServerFrames;
 
-import bgu.spl.net.Frames.Frames;
-import bgu.spl.net.impl.rci.Command;
 import bgu.spl.net.srv.ConnectionsImpl;
-import bgu.spl.net.srv.Library;
 
-import java.io.Serializable;
-
-public class Message implements Frames {
+public class Message implements ServerFrame {
 
     private String command;
     private String destinationId;
@@ -21,13 +16,4 @@ public class Message implements Frames {
         this.subscription = subscription;
     }
 
-    @Override
-    public void execute(int connectionId, Library library) {
-
-    }
-
-    @Override
-    public void setConnections(ConnectionsImpl<Frames> connections) {
-        this.connections = connections;
-    }
 }

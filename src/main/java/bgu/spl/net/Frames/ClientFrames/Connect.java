@@ -1,13 +1,13 @@
 package bgu.spl.net.Frames.ClientFrames;
-import bgu.spl.net.Frames.Frames;
 import bgu.spl.net.Frames.ServerFrames.Connected;
 import bgu.spl.net.Frames.ServerFrames.Error;
+import bgu.spl.net.Frames.ServerFrames.ServerFrame;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
 import java.util.Vector;
 
-public class Connect implements Frames {
+public class Connect implements ClientFrame {
 
     private String userName;
     private String password;
@@ -24,17 +24,15 @@ public class Connect implements Frames {
 
     @Override
     public void  execute(int connectionId, Library library) {
-        Frames response;
+        ServerFrame response;
         //Todo check if the server connection was succsesful
         //New User
         if (library.getUser(userName) == null) {
             User newUser = new User(userName, password, new Vector<String>());
             newUser.setActive(true);
             library.getAllUsers().put(userName, newUser);
-//            response=new Connected(version, "Login successful");
-       //     String [] output=Connected.
-
-          //  connections.send(connectionId, response);
+            response=new Connected(version, "Login successful");
+            connections.send(connectionId, response);
             newUser.setActive(true);
         }
 
@@ -62,7 +60,7 @@ public class Connect implements Frames {
     }
 
     @Override
-    public void setConnections(ConnectionsImpl<Frames> connections) {
+    public void setConnections(ConnectionsImpl<ClientFrame> connections) {
         this.connections = connections;
 
     }

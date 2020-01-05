@@ -1,6 +1,5 @@
 package bgu.spl.net.api;
 import bgu.spl.net.Frames.ClientFrames.*;
-import bgu.spl.net.Frames.Frames;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -39,14 +38,14 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
         bytes[len++]=nextbyte;
     }
 
-    private Frames popString(){
+    private ClientFrame popString(){
         String result=new String(bytes,0,len,StandardCharsets.UTF_8);
         len=0;
         return makeFrame(result);
     }
-    private Frames makeFrame(String result){
+    private ClientFrame makeFrame(String result){
         String [] output = result.split(System.lineSeparator());
-        Frames outputFrame = null;
+        ClientFrame outputFrame = null;
 
 
         switch (output[0]){

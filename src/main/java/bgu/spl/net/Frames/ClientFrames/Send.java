@@ -1,11 +1,9 @@
 package bgu.spl.net.Frames.ClientFrames;
 
-import bgu.spl.net.Frames.Frames;
-import bgu.spl.net.Frames.ServerFrames.Message;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 
-public class Send implements Frames {
+public class Send implements ClientFrame {
 
     private String topic;
     private String body;
@@ -18,7 +16,7 @@ public class Send implements Frames {
 
     @Override
     public void execute(int connectionId, Library library) {
-        Frames message;
+        ClientFrame message;
         String [] bodyArray=body.split(" ",10);
 
         if(bodyArray[2]=="add"){
@@ -45,7 +43,7 @@ public class Send implements Frames {
     }
 
     @Override
-    public void setConnections(ConnectionsImpl<Frames> connections) {
+    public void setConnections(ConnectionsImpl<ClientFrame> connections) {
         this.connections = connections;
     }
 }
