@@ -1,5 +1,6 @@
 package bgu.spl.net.Frames.ClientFrames;
 import bgu.spl.net.Frames.ServerFrames.Receipt;
+import bgu.spl.net.Frames.ServerFrames.ServerFrame;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
@@ -19,14 +20,16 @@ public class Unsubscribe implements ClientFrame {
     }
 
     public void execute (int connectionId , Library library){
-        ClientFrame serverReceipt;
+        ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);
             if (library.getUsersByTopic(this.topic) != null){
                 library.getUsersByTopic(this.topic).remove(userTemp);
             }
-            serverReceipt=new Receipt(receipt);
-            connections.send(connectionId,serverReceipt);
+            response=new Receipt();
+            String output=response.makeFrame(this.receipt);
+            connections.send(connectionId,output);
+            //TODO CHECK WHERE TO PRINT THE MESSAGE
             printMessage(topic);
         }
 

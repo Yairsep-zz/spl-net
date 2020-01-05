@@ -1,14 +1,15 @@
 package bgu.spl.net.Frames.ServerFrames;
 
-import bgu.spl.net.srv.ConnectionsImpl;
-
 public class Receipt implements ServerFrame {
 
-    private String receiptId;
-    private ConnectionsImpl connections;
+    public Receipt() {
 
-    public Receipt(String receiptId) {
-        this.receiptId = receiptId;
     }
 
+    @Override
+    public String makeFrame(String msg) {
+
+        String output = "RECEIPT" + "\n" + "receipt-id:" + msg + "\n" + "\n"+  "^@";
+        return output;
+    }
 }

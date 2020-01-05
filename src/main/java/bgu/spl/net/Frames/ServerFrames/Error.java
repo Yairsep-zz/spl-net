@@ -1,14 +1,12 @@
 package bgu.spl.net.Frames.ServerFrames;
-
-import bgu.spl.net.srv.ConnectionsImpl;
-
 public class Error implements ServerFrame {
 
-    private String errorMessage;
-    private ConnectionsImpl connections;
-
-    public Error(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public Error() {
     }
 
+    public String makeFrame(String msg){
+
+        String output = "ERROR" + "\n" +"\n" + msg+ "\n" + "\n"+ "^@";
+        return output;
+    }
 }

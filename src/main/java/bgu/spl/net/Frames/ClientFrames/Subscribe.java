@@ -1,5 +1,6 @@
 package bgu.spl.net.Frames.ClientFrames;
 import bgu.spl.net.Frames.ServerFrames.Receipt;
+import bgu.spl.net.Frames.ServerFrames.ServerFrame;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
@@ -8,7 +9,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class Subscribe implements ClientFrame {
-
 
     private String topic;
     private String id;
@@ -24,7 +24,7 @@ public class Subscribe implements ClientFrame {
 
     public void execute (int connectionId , Library library){
         //TODO check what needed to be done here
-        ClientFrame serverReceipt;
+        ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);
             if (library.getUsersByTopic(this.topic) != null){
@@ -35,8 +35,10 @@ public class Subscribe implements ClientFrame {
                 newTopic.add(userTemp);
                 library.getSubscribersToTopicsMap().put(topic,newTopic);
             }
-           serverReceipt=new Receipt(receipt);
-            connections.send(connectionId,serverReceipt);
+            response=new Receipt();
+            String output=response.makeFrame(this.receipt);
+            connections.send(connectionId,output);
+            //TODO CHECK WEHERE TO PRINT THE MESSAGE
             printMessage(topic);
         }
 

@@ -64,7 +64,6 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
                 outputFrame = new Send(output[1].substring(12),output[3]);
                 break;
         }
-
         return outputFrame;
     }
 

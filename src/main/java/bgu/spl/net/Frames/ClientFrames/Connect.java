@@ -31,8 +31,9 @@ public class Connect implements ClientFrame {
             User newUser = new User(userName, password, new Vector<String>());
             newUser.setActive(true);
             library.getAllUsers().put(userName, newUser);
-            response=new Connected(version, "Login successful");
-            connections.send(connectionId, response);
+            response=new Connected();
+            String output=response.makeFrame(version);
+            connections.send(connectionId, output);
             newUser.setActive(true);
         }
 
@@ -41,18 +42,21 @@ public class Connect implements ClientFrame {
             User newUser = library.getUser(userName);
             //check if user is already active
             if (newUser.isActive()) {
-                 response =new Error("User already logged in");
-                connections.send(connectionId, response);
+                 response =new Error();
+                 String output = response.makeFrame("User already logged in");
+                connections.send(connectionId, output);
             } else {
                 //check if password is correct
                 if (newUser.getPassword() != this.password) {
-                      response=new Error("Wrong password");
-                    connections.send(connectionId, response);
+                      response=new Error();
+                    String output = response.makeFrame("Wrong password");
+                    connections.send(connectionId, output);
                 }
                 else{
-                     response=new Connected(version,"Login successful");
+                     response=new Connected();
                      newUser.setActive(true);
-                    connections.send(connectionId, response);
+                     String output=response.makeFrame(version);
+                    connections.send(connectionId, output);
                 }
 
             }

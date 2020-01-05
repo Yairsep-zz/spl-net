@@ -3,17 +3,20 @@ package bgu.spl.net.Frames.ServerFrames;
 import bgu.spl.net.srv.ConnectionsImpl;
 
 public class Message implements ServerFrame {
+    public static int counter;
 
-    private String command;
-    private String destinationId;
-    private int messageId;
-    private int subscription;
-    private ConnectionsImpl connections;
 
-    public Message(String destinationId, int messageId, int subscription) {
-        this.destinationId = destinationId;
-        this.messageId = messageId;
-        this.subscription = subscription;
+    public Message() {
+        counter++;
     }
 
+
+    public String makeFrame(String msg) {
+        return null;
+    }
+
+    public String makeMessageFrame(String subscription,String destination,String body){
+        String output="MESSAGE"+ "\n"+"subscription:"+subscription+"\n"+"Message-id:"+counter+"\n"+"destination:"+destination+"\n"+"\n"+body+"\n"+"^@";
+        return output;
+  }
 }

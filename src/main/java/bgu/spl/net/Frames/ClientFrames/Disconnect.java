@@ -1,5 +1,6 @@
 package bgu.spl.net.Frames.ClientFrames;
 import bgu.spl.net.Frames.ServerFrames.Receipt;
+import bgu.spl.net.Frames.ServerFrames.ServerFrame;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
@@ -16,7 +17,7 @@ public class Disconnect implements ClientFrame {
     }
 
     public void execute(int connectionId, Library library) {
-        Receipt response;
+        ServerFrame response;
         //TODO CHECK ABOUT CLOSING THE SERVER SOCKET
         //Removing from Library
         if (library.getConnectionIdMap().get(connectionId)!= null) {
@@ -27,8 +28,9 @@ public class Disconnect implements ClientFrame {
                     library.getSubscribersToTopicsMap().get(topicsIterator).remove(tempUser);
                 }
             }
-            response = new Receipt(this.receipt);
-            connections.send(connectionId, response);
+            response = new Receipt();
+            String output=response.makeFrame(this.receipt);
+            connections.send(connectionId, output);
         }
     }
     @Override

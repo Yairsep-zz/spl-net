@@ -32,10 +32,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
         }
     }
 
-    @Override
-    public T process(T msg) {
-        return null;
-    }
+
 
     @Override
     public boolean shouldTerminate() {
