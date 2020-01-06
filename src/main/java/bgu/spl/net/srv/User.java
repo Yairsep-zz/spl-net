@@ -6,20 +6,17 @@ public class User {
 
     private String name;
     private String password;
-    private Vector<String> borrowedBooks;
     private boolean isActive;
 
-    public int getId() {
-        return id;
-    }
-
-    private int id;
+    private int connectionId;
 
 
-    public User( String name, String password, Vector<String> borrowedBooks) {
+
+
+    public User( String name, String password,int connectionId) {
         this.name = name;
         this.password = password;
-        this.borrowedBooks = borrowedBooks;
+        this.connectionId=connectionId;
     }
 
 
@@ -35,11 +32,17 @@ public class User {
         return password;
     }
 
-    public Vector<String> getBorrowedBooks() {
-        return borrowedBooks;
+
+    public int getConnectionId() {
+        return connectionId;
     }
 
 
+
+
+    public void setConnectionId(int connectionId) {
+        this.connectionId = connectionId;
+    }
 
     public void setActive(boolean active) {
         isActive = active;
@@ -53,7 +56,5 @@ public class User {
         this.password = password;
     }
 
-    public void setBorrowedBooks(Vector<String> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
-    }
+
 }

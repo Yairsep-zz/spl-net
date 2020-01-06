@@ -29,8 +29,9 @@ public class ConnectionsImpl<T> implements Connections<T> {
     public void send(String topic, T msg) throws IOException {
         ConcurrentLinkedQueue<User> byTopic=library.SubscribersToTopicsMap.get(topic);
         for (User user:byTopic) {
-            int tempId=user.getId();
-            connectionsById.get(tempId).send(msg);
+            int id=user.getConnectionId();
+            send(id,msg);
+
         }
     }
 

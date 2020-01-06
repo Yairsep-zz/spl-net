@@ -5,6 +5,8 @@ import bgu.spl.net.srv.Connections;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 
+import java.io.IOException;
+
 
 public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> {
 
@@ -23,7 +25,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
         this.connectionId=connectionId;
     }
 
-    public void process(ClientFrame message) {
+    public void process(ClientFrame message) throws IOException {
         message.setConnections(connections);
         message.execute(connectionId, library);
 

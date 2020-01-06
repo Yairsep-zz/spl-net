@@ -1,18 +1,27 @@
 package bgu.spl.net.srv;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Library {
 
     public ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> SubscribersToTopicsMap;
     public ConcurrentHashMap<String, User> allUsers;
+    public ConcurrentHashMap<Integer, User> connectionIdMap;
+    private AtomicInteger userId=new AtomicInteger(0);
 
+
+
+
+
+
+    public int getUserId(){
+        return userId.getAndIncrement();
+    }
 
     public ConcurrentHashMap<Integer, User> getConnectionIdMap() {
         return connectionIdMap;
     }
-
-    public ConcurrentHashMap<Integer, User> connectionIdMap;
 
     public Library() {
         this.SubscribersToTopicsMap = new ConcurrentHashMap<>();

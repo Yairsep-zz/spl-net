@@ -30,7 +30,7 @@ public class Connect implements ClientFrame {
         //Todo check if the server connection was succsesful
         //New User
         if (library.getUser(userName) == null) {
-            User newUser = new User(userName, password, new Vector<String>());
+            User newUser = new User(userName, password, connectionId);
             newUser.setActive(true);
             library.getAllUsers().put(userName, newUser);
             response=new Connected();
