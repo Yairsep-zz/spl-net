@@ -5,6 +5,8 @@ import bgu.spl.net.Frames.ServerFrames.ServerFrame;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
+
+import java.io.IOException;
 import java.util.Vector;
 
 public class Connect implements ClientFrame {
@@ -23,7 +25,7 @@ public class Connect implements ClientFrame {
     }
 
     @Override
-    public void  execute(int connectionId, Library library) {
+    public void  execute(int connectionId, Library library) throws IOException {
         ServerFrame response;
         //Todo check if the server connection was succsesful
         //New User

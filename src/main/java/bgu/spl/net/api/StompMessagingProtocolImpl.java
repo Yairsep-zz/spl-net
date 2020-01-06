@@ -33,7 +33,6 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
     }
 
 
-
     @Override
     public boolean shouldTerminate() {
         return shouldTerminate;

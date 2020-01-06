@@ -15,7 +15,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
     @Override
     public T decodeNextByte(byte nextByte) {
         String nextStringByte= String.valueOf(nextByte);
-        if(nextStringByte=="\n"){
+        if(nextStringByte=="\0"){
             return (T)popString();
         }
         pushByte(nextByte);
@@ -60,6 +60,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
                 break;
             case "SUBSCRIBE":
                 outputFrame=new Subscribe(output[1].substring(12),output[2].substring(3),output[3].substring(8));
+                break;
             case "SEND":
                 outputFrame = new Send(output[1].substring(12),output[3]);
                 break;

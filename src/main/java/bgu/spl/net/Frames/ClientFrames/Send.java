@@ -4,12 +4,13 @@ import bgu.spl.net.Frames.ServerFrames.Message;
 import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 
+import java.io.IOException;
+
 public class Send implements ClientFrame {
 
     private String topic;
     private String body;
     private String subscription;
-    private String id;
     private ConnectionsImpl connections;
 
     public Send(String topic, String body) {
@@ -18,9 +19,10 @@ public class Send implements ClientFrame {
     }
 
     @Override
-    public void execute(int connectionId, Library library) {
+    public void execute(int connectionId, Library library) throws IOException {
         Message response;
         response=new Message();
+        //TODO CHECK ABOUT THE SUBSCRIPTION!
         String output=response.makeMessageFrame(this.subscription,this.topic,this.body);
         connections.send(topic,output);
     }

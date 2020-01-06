@@ -5,6 +5,8 @@ import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
 
+import java.io.IOException;
+
 
 public class Unsubscribe implements ClientFrame {
 
@@ -19,7 +21,7 @@ public class Unsubscribe implements ClientFrame {
         this.receipt = receipt;
     }
 
-    public void execute (int connectionId , Library library){
+    public void execute (int connectionId , Library library) throws IOException {
         ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);

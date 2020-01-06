@@ -1,5 +1,6 @@
 package bgu.spl.net.srv;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -14,7 +15,8 @@ public class ConnectionsImpl<T> implements Connections<T> {
         connectionsById = new ConcurrentHashMap<>();
     }
 
-    public boolean send(int connectionId, T msg) {
+    //Sending message to client
+    public boolean send(int connectionId, T msg) throws IOException {
         ConnectionHandler<T> temp=connectionsById.get(connectionId);
         if(temp!=null){
             temp.send(msg);
@@ -23,8 +25,8 @@ public class ConnectionsImpl<T> implements Connections<T> {
         return false;
     }
 
-    @Override
-    public void send(String topic, T msg) {
+    //Sending frame to whole topic
+    public void send(String topic, T msg) throws IOException {
         ConcurrentLinkedQueue<User> byTopic=library.SubscribersToTopicsMap.get(topic);
         for (User user:byTopic) {
             int tempId=user.getId();

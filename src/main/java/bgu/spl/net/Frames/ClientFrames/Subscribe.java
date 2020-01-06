@@ -5,6 +5,7 @@ import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
 
+import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
@@ -22,7 +23,7 @@ public class Subscribe implements ClientFrame {
     }
 
 
-    public void execute (int connectionId , Library library){
+    public void execute (int connectionId , Library library) throws IOException {
         //TODO check what needed to be done here
         ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {

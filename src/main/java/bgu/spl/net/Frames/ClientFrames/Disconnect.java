@@ -5,6 +5,7 @@ import bgu.spl.net.srv.ConnectionsImpl;
 import bgu.spl.net.srv.Library;
 import bgu.spl.net.srv.User;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 public class Disconnect implements ClientFrame {
@@ -16,7 +17,7 @@ public class Disconnect implements ClientFrame {
         this.receipt = receipt;
     }
 
-    public void execute(int connectionId, Library library) {
+    public void execute(int connectionId, Library library) throws IOException {
         ServerFrame response;
         //TODO CHECK ABOUT CLOSING THE SERVER SOCKET
         //Removing from Library
