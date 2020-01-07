@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConnectionsImpl<T> implements Connections<T> {
 
@@ -11,6 +12,7 @@ public class ConnectionsImpl<T> implements Connections<T> {
     private Library library;
 
 
+    //TODO CHECK ABOUT SWITCHING THE ADDAING OF A NEW CONNECTION HANDLER TO HERE INSTDE OF THE BASE SERVER AND REACTOR
     public ConnectionsImpl() {
         connectionsById = new ConcurrentHashMap<>();
     }
@@ -33,6 +35,13 @@ public class ConnectionsImpl<T> implements Connections<T> {
             send(id,msg);
 
         }
+    }
+
+    public ConcurrentHashMap<Integer, ConnectionHandler<T>>  getconnection(){
+        return this.connectionsById;
+    }
+    public void addConnection(int connectionId,ConnectionHandler connectionHandler){
+        this.connectionsById.put(connectionId,connectionHandler);
     }
 
     @Override

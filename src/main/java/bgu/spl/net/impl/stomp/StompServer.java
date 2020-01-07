@@ -13,22 +13,22 @@ public class StompServer {
     public static void main(String[] args) {
 
         Library library = new Library();
-        int port = Integer.parseInt(args[0]);
+//        int port = Integer.parseInt(args[0]);
 
-        if (args[1] == "tpc") {
-            Server server = Server.threadPerClient(port,
+//        if (args[1] == "tpc") {
+            Server server = Server.threadPerClient(777,
                     () ->new  StompMessagingProtocolImpl(library),
                     () ->new MessageEncoderDecoderImpl());
             server.serve();
-        }
+//        }
 
-        if (args[1] == "reactor") {
-            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
-                    port,
-                    () -> new StompMessagingProtocolImpl(library),
-                    () ->new MessageEncoderDecoderImpl());
-            server.serve();
-        }
+//        if (args[1] == "reactor") {
+//            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
+//                    port,
+//                    () -> new StompMessagingProtocolImpl(library),
+//                    () ->new MessageEncoderDecoderImpl());
+//            server.serve();
+//        }
     }
 
 }
