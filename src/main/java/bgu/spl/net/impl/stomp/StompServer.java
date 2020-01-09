@@ -14,15 +14,16 @@ public class StompServer {
 
         Library library = new Library();
 //        int port = Integer.parseInt(args[0]);
+//        String typeOfServer = args[1];
 
-//        if (args[1] == "tpc") {
-            Server server = Server.threadPerClient(777,
-                    () ->new  StompMessagingProtocolImpl(library),
-                    () ->new MessageEncoderDecoderImpl());
+//        if (typeOfServer.equals("tpc")) {
+            Server server = Server.threadPerClient(7777,
+                    () -> new StompMessagingProtocolImpl(library),
+                    () -> new MessageEncoderDecoderImpl());
             server.serve();
 //        }
 
-//        if (args[1] == "reactor") {
+//        if (typeOfServer.equals("reactor")) {
 //            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
 //                    port,
 //                    () -> new StompMessagingProtocolImpl(library),
