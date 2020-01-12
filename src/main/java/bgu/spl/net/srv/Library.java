@@ -5,18 +5,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Library {
 
-    public ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> SubscribersToTopicsMap;
-    public ConcurrentHashMap<String, User> allUsers;
-    public ConcurrentHashMap<Integer, User> connectionIdMap;
+    public static ConcurrentHashMap<String, ConcurrentLinkedQueue<User>> SubscribersToTopicsMap;
+    public static ConcurrentHashMap<String, User> allUsers;
+    public static ConcurrentHashMap<Integer, User> connectionIdMap;
     private AtomicInteger userId=new AtomicInteger(0);
+
 
     public int getUserId(){
         return userId.getAndIncrement();
     }
 
-    public ConcurrentHashMap<Integer, User> getConnectionIdMap() {
-        return connectionIdMap;
-    }
+
 
     public Library() {
         this.SubscribersToTopicsMap = new ConcurrentHashMap<>();
@@ -55,6 +54,10 @@ public class Library {
         return SubscribersToTopicsMap.get(topic);
     }
 
+
+    public ConcurrentHashMap<Integer, User> getConnectionIdMap() {
+        return connectionIdMap;
+    }
     //Setters
 
 

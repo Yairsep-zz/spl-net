@@ -6,8 +6,7 @@ public class Connected implements ServerFrame {
     public String makeFrame(String msg){
         String header = "CONNECTED";
         String ver = "version:" + msg;
-        String frameClose = "^@";
-        String output = header+"\n"+ver+"\n"+"\n"+ frameClose;
+        String output = header+"\n"+ver+"\n\n"+ '\u0000';
         return output;
     }
 

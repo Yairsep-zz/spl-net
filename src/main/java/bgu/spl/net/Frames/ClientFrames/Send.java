@@ -10,8 +10,7 @@ public class Send implements ClientFrame {
 
     private String topic;
     private String body;
-    private String subscription;
-    private ConnectionsImpl connections;
+    private ConnectionsImpl connections=ConnectionsImpl.getInstance();
 
     public Send(String topic, String body) {
         this.topic = topic;
@@ -20,10 +19,12 @@ public class Send implements ClientFrame {
 
     @Override
     public void execute(int connectionId, Library library) throws IOException {
+        System.out.println("reached send execute");
         Message response;
         response=new Message();
+        String subscriptionId = library.getConnectionIdMap().get(connectionId).getTopicToSubscriptioId().get(topic);
         //TODO CHECK ABOUT THE SUBSCRIPTION!
-        String output=response.makeMessageFrame(this.subscription,this.topic,this.body);
+        String output=response.makeMessageFrame(subscriptionId,this.topic,this.body);
         connections.send(topic,output);
     }
 

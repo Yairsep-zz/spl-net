@@ -16,7 +16,9 @@ public class Message implements ServerFrame {
     }
 
     public String makeMessageFrame(String subscription,String destination,String body){
-        String output="MESSAGE"+ "\n"+"subscription:"+subscription+"\n"+"Message-id:"+counter+"\n"+"destination:"+destination+"\n"+"\n"+body+"\n"+"^@";
+
+        //TODO CHANGE THE SUBSCRIPTION NUMBER WHEN RUTURNING TO C++
+        String output="MESSAGE"+ "\n"+"subscription:"+subscription+"\n"+"Message-id:"+counter+"\n"+"destination:"+destination+"\n"+"\n"+body+"\n"+'\u0000';
         return output;
   }
 }

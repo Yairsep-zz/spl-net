@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> {
 
-    private ConnectionsImpl<ClientFrame> connections;
+    private ConnectionsImpl connections;
     private int connectionId;
     private boolean shouldTerminate = false;
     private Library library;
@@ -20,7 +20,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
     }
 
     @Override
-    public void start(int connectionId, Connections<ClientFrame> connections) {
+    public void start(int connectionId, Connections connections) {
         this.connections= (ConnectionsImpl)connections;
         this.connectionId=connectionId;
     }

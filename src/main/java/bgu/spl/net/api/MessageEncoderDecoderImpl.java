@@ -11,22 +11,21 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
     private int len=0;
 
 
-
     @Override
     public T decodeNextByte(byte nextByte) {
-        String nextStringByte= String.valueOf(nextByte);
-        if(nextStringByte=="\0"){
+
+        if(nextByte == '\u0000'){
+            System.out.println("found a Frame");
             return (T)popString();
         }
         pushByte(nextByte);
         return null;
-
-
     }
 
     @Override
     public byte[] encode(T message) {
         //@TODO CHECK ABOUT CASES
+
         return ((String)message).getBytes();
     }
 
@@ -44,8 +43,12 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
         return makeFrame(result);
     }
     private ClientFrame makeFrame(String result){
-        String [] output = result.split(System.lineSeparator());
+        if(result.charAt(0)=='\n')
+            result=result.substring(1);
+
+        String [] output = result.split("\n");
         ClientFrame outputFrame = null;
+
 
 
         switch (output[0]){
@@ -65,7 +68,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
                 outputFrame = new Send(output[1].substring(12),output[3]);
                 break;
         }
-        return outputFrame;
+            return outputFrame;
     }
 
 

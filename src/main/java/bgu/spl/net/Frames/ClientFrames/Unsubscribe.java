@@ -22,6 +22,7 @@ public class Unsubscribe implements ClientFrame {
     }
 
     public void execute (int connectionId , Library library) throws IOException {
+        System.out.println("reached subscribed execute");
         ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);

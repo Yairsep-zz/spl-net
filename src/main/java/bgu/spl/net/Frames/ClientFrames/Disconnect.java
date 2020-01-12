@@ -18,6 +18,7 @@ public class Disconnect implements ClientFrame {
     }
 
     public void execute(int connectionId, Library library) throws IOException {
+        System.out.println("reached disconnect execute");
         ServerFrame response;
         //TODO CHECK ABOUT CLOSING THE SERVER SOCKET
         //Removing from Library

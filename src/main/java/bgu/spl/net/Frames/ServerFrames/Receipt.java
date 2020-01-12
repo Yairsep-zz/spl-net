@@ -9,7 +9,7 @@ public class Receipt implements ServerFrame {
     @Override
     public String makeFrame(String msg) {
 
-        String output = "RECEIPT" + "\n" + "receipt-id:" + msg + "\n" + "\n"+  "^@";
+        String output = "RECEIPT" + "\n" + "receipt-id:" + msg + "\n\n"+ '\u0000';
         return output;
     }
 }

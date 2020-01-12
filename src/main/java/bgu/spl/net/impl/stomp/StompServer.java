@@ -17,6 +17,7 @@ public class StompServer {
 //        String typeOfServer = args[1];
 
 //        if (typeOfServer.equals("tpc")) {
+        //TODO check about sending library parameter
             Server server = Server.threadPerClient(7777,
                     () -> new StompMessagingProtocolImpl(library),
                     () -> new MessageEncoderDecoderImpl());

@@ -1,6 +1,7 @@
 package bgu.spl.net.srv;
 
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class User {
 
@@ -8,6 +9,9 @@ public class User {
     private String password;
     private boolean isActive;
     private int connectionId;
+    private ConcurrentHashMap<String ,String> topicToSubscriptioId;
+
+
 
 
 
@@ -16,6 +20,7 @@ public class User {
         this.name = name;
         this.password = password;
         this.connectionId=connectionId;
+        topicToSubscriptioId=new ConcurrentHashMap<>();
     }
 
 
@@ -35,6 +40,15 @@ public class User {
     public int getConnectionId() {
         return connectionId;
     }
+
+    public ConcurrentHashMap<String, String> getTopicToSubscriptioId() {
+        return topicToSubscriptioId;
+    }
+
+    public void setTopicToSubscriptioId(ConcurrentHashMap<String, String> topicToSubscriptioId) {
+        this.topicToSubscriptioId = topicToSubscriptioId;
+    }
+
 
 
 

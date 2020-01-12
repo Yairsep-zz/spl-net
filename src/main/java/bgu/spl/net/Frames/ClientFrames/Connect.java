@@ -2,20 +2,18 @@ package bgu.spl.net.Frames.ClientFrames;
 import bgu.spl.net.Frames.ServerFrames.Connected;
 import bgu.spl.net.Frames.ServerFrames.Error;
 import bgu.spl.net.Frames.ServerFrames.ServerFrame;
-import bgu.spl.net.srv.ConnectionsImpl;
-import bgu.spl.net.srv.Library;
-import bgu.spl.net.srv.User;
+import bgu.spl.net.srv.*;
 
 import java.io.IOException;
-import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Connect implements ClientFrame {
-
+    private ConnectionsImpl connectionsImpl=ConnectionsImpl.getInstance();
     private String userName;
     private String password;
     private String ip;
-    private ConnectionsImpl connections;
     private String version;
+
 
     public Connect(String userName, String password, String ip, String version) {
         this.userName = userName;
@@ -26,17 +24,22 @@ public class Connect implements ClientFrame {
 
     @Override
     public void  execute(int connectionId, Library library) throws IOException {
+        System.out.println("reached connect execute");
         ServerFrame response;
+
+
         //Todo check if the server connection was succsesful
         //New User
         if (library.getUser(userName) == null) {
-
             User newUser = new User(userName, password, connectionId);
             newUser.setActive(true);
+            ConcurrentHashMap<String, User> tmpMap = library.getAllUsers();
             library.getAllUsers().put(userName, newUser);
+            ConcurrentHashMap<String, User> tmpMap2 = library.getAllUsers();
+            library.getConnectionIdMap().putIfAbsent(connectionId,newUser);
             response=new Connected();
             String output=response.makeFrame(version);
-            connections.send(connectionId, output);
+            connectionsImpl.send(connectionId,output);
             newUser.setActive(true);
         }
 
@@ -47,19 +50,19 @@ public class Connect implements ClientFrame {
             if (newUser.isActive()) {
                  response =new Error();
                  String output = response.makeFrame("User already logged in");
-                connections.send(connectionId, output);
+                connectionsImpl.send(connectionId, output);
             } else {
                 //check if password is correct
                 if (newUser.getPassword() != this.password) {
                       response=new Error();
                     String output = response.makeFrame("Wrong password");
-                    connections.send(connectionId, output);
+                    connectionsImpl.send(connectionId, output);
                 }
                 else{
                      response=new Connected();
                      newUser.setActive(true);
                      String output=response.makeFrame(version);
-                    connections.send(connectionId, output);
+                    connectionsImpl.send(connectionId, output);
                 }
 
             }
@@ -68,7 +71,7 @@ public class Connect implements ClientFrame {
 
     @Override
     public void setConnections(ConnectionsImpl<ClientFrame> connections) {
-        this.connections = connections;
+        this.connectionsImpl = connections;
 
     }
 

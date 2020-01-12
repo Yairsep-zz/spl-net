@@ -14,7 +14,7 @@ public class Subscribe implements ClientFrame {
     private String topic;
     private String id;
     private String receipt;
-    private ConnectionsImpl connections;
+    private ConnectionsImpl connections=ConnectionsImpl.getInstance();
 
     public Subscribe(String topic, String id, String receipt) {
         this.topic = topic;
@@ -24,10 +24,12 @@ public class Subscribe implements ClientFrame {
 
 
     public void execute (int connectionId , Library library) throws IOException {
+        System.out.println("reached subscribed execute");
         //TODO check what needed to be done here
         ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);
+            userTemp.getTopicToSubscriptioId().put(topic,id);
             if (library.getUsersByTopic(this.topic) != null){
                 library.getUsersByTopic(this.topic).add(userTemp);
             }
@@ -40,14 +42,9 @@ public class Subscribe implements ClientFrame {
             String output=response.makeFrame(this.receipt);
             connections.send(connectionId,output);
             //TODO CHECK WEHERE TO PRINT THE MESSAGE
-            printMessage(topic);
         }
 
     }
-    private void printMessage(String topic) {
-        System.out.println("Joined Club " + topic);
-    }
-
     @Override
     public void setConnections(ConnectionsImpl<ClientFrame> connections) {
         this.connections = connections;

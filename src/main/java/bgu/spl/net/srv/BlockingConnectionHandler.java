@@ -5,6 +5,7 @@ import bgu.spl.net.api.MessageEncoderDecoder;
 import bgu.spl.net.api.MessagingProtocol;
 import bgu.spl.net.api.StompMessagingProtocolImpl;
 
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -19,10 +20,13 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
     private BufferedOutputStream out;
     private volatile boolean connected = true;
 
-    public BlockingConnectionHandler(Socket sock, MessageEncoderDecoder<T> reader, StompMessagingProtocolImpl<T> protocol) {
+
+    public BlockingConnectionHandler(Socket sock, MessageEncoderDecoder<T> reader, StompMessagingProtocolImpl<T> protocol,int connectionsId , ConnectionsImpl connections) {
         this.sock = sock;
         this.encdec = reader;
         this.protocol = protocol;
+        protocol.start(connectionsId, connections);
+
     }
 
     @Override
@@ -35,10 +39,7 @@ public class BlockingConnectionHandler<T> implements Runnable, ConnectionHandler
 
             while (!protocol.shouldTerminate() && connected && (read = in.read()) >= 0) {
                 T nextMessage = encdec.decodeNextByte((byte) read);
-                //ToDO Printing For Debug
-                System.out.println("This line is being done");
                 if (nextMessage != null) {
-
                     protocol.process((ClientFrame) nextMessage);
                 }
             }
