@@ -26,7 +26,7 @@ public class StompServer {
 
 //        if (typeOfServer.equals("reactor")) {
 //            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
-//                    port,
+//                    7777,
 //                    () -> new StompMessagingProtocolImpl(library),
 //                    () ->new MessageEncoderDecoderImpl());
 //            server.serve();

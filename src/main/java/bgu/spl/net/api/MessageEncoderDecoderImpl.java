@@ -56,7 +56,7 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
                 outputFrame = new Connect(output[3].substring(6),output[4].substring(9),output[2].substring(6),output[1].substring(15));
                 break;
             case "DISCONNECT":
-                outputFrame=new Disconnect(output[1].substring(5));
+                outputFrame=new Disconnect(output[1].substring(8));
                 break;
             case "UNSUBSCRIBE":
                 outputFrame= new Unsubscribe(output[1].substring(12),output[2].substring(3),output[3].substring(8));

@@ -22,7 +22,7 @@ public class Unsubscribe implements ClientFrame {
     }
 
     public void execute (int connectionId , Library library) throws IOException {
-        System.out.println("reached subscribed execute");
+        System.out.println("reached unsubscribed execute");
         ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);
@@ -32,13 +32,8 @@ public class Unsubscribe implements ClientFrame {
             response=new Receipt();
             String output=response.makeFrame(this.receipt);
             connections.send(connectionId,output);
-            //TODO CHECK WHERE TO PRINT THE MESSAGE
-            printMessage(topic);
         }
 
-    }
-    private void printMessage(String topic) {
-        System.out.println("Exited Club " + topic);
     }
 
     @Override
