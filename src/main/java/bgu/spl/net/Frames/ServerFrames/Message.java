@@ -10,15 +10,15 @@ public class Message implements ServerFrame {
         counter++;
     }
 
-
     public String makeFrame(String msg) {
         return null;
     }
 
     public String makeMessageFrame(String subscription,String destination,String body){
-
-        //TODO CHANGE THE SUBSCRIPTION NUMBER WHEN RUTURNING TO C++
+        if(subscription==null)
+            subscription="-1";
         String output="MESSAGE"+ "\n"+"subscription:"+subscription+"\n"+"Message-id:"+counter+"\n"+"destination:"+destination+"\n"+"\n"+body+"\n"+'\u0000';
+
         return output;
   }
 }

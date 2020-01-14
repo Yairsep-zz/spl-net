@@ -6,7 +6,7 @@ public class Error implements ServerFrame {
 
     public String makeFrame(String msg){
 
-        String output = "ERROR" + "\n" +"\n" + msg+ "\n" + "\n"+ '\u0000';
+        String output = "ERROR" + "\n"+"message:"+ msg+ "\n" +"\n"+msg+"\n"+ '\u0000';
         return output;
     }
 }

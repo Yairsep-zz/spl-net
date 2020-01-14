@@ -26,8 +26,6 @@ public class Connect implements ClientFrame {
     public void  execute(int connectionId, Library library) throws IOException {
         System.out.println("reached connect execute");
         ServerFrame response;
-
-
         //Todo check if the server connection was succsesful
         //New User
         if (library.getUser(userName) == null) {
@@ -45,22 +43,22 @@ public class Connect implements ClientFrame {
 
         //Not a new User:
         else {
-            User newUser = library.getUser(userName);
+            User oldUser = library.getUser(userName);
             //check if user is already active
-            if (newUser.isActive()) {
+            if (oldUser.isActive()) {
                  response =new Error();
                  String output = response.makeFrame("User already logged in");
                 connectionsImpl.send(connectionId, output);
             } else {
                 //check if password is correct
-                if (newUser.getPassword() != this.password) {
+                if (oldUser.getPassword() != this.password) {
                       response=new Error();
                     String output = response.makeFrame("Wrong password");
                     connectionsImpl.send(connectionId, output);
                 }
                 else{
                      response=new Connected();
-                     newUser.setActive(true);
+                     oldUser.setActive(true);
                      String output=response.makeFrame(version);
                     connectionsImpl.send(connectionId, output);
                 }

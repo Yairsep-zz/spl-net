@@ -2,6 +2,7 @@ package bgu.spl.net.srv;
 
 import bgu.spl.net.api.MessageEncoderDecoder;
 import bgu.spl.net.api.MessagingProtocol;
+import bgu.spl.net.api.StompMessagingProtocol;
 import bgu.spl.net.api.StompMessagingProtocolImpl;
 
 import java.io.IOException;
@@ -20,10 +21,11 @@ public class Reactor<T> implements Server<T> {
     private final int port;
     private final Supplier<StompMessagingProtocolImpl<T>> protocolFactory;
     private final Supplier<MessageEncoderDecoder<T>> readerFactory;
+    private StompMessagingProtocolImpl protocol;
     private final ActorThreadPool pool;
     private Selector selector;
     private AtomicInteger connectionsId;
-    private ConnectionsImpl connections;
+    private ConnectionsImpl connections=ConnectionsImpl.getInstance();
 
     private Thread selectorThread;
     private final ConcurrentLinkedQueue<Runnable> selectorTasks = new ConcurrentLinkedQueue<>();
@@ -39,21 +41,21 @@ public class Reactor<T> implements Server<T> {
         this.protocolFactory = protocolFactory;
         this.readerFactory = readerFactory;
         connectionsId=new AtomicInteger(0);
-        connections=new ConnectionsImpl();
+
     }
 
     @Override
     public void serve() {
-	selectorThread = Thread.currentThread();
+        selectorThread = Thread.currentThread();
         try (Selector selector = Selector.open();
-                ServerSocketChannel serverSock = ServerSocketChannel.open()) {
+             ServerSocketChannel serverSock = ServerSocketChannel.open()) {
 
             this.selector = selector; //just to be able to close
 
             serverSock.bind(new InetSocketAddress(port));
             serverSock.configureBlocking(false);
             serverSock.register(selector, SelectionKey.OP_ACCEPT);
-			System.out.println("Server started");
+            System.out.println("Server started");
 
             while (!Thread.currentThread().isInterrupted()) {
 
@@ -102,18 +104,15 @@ public class Reactor<T> implements Server<T> {
     private void handleAccept(ServerSocketChannel serverChan, Selector selector) throws IOException {
         SocketChannel clientChan = serverChan.accept();
         clientChan.configureBlocking(false);
-        //TODO CHECK ABOUT PROTOCOL START METHOD
-
-
+        protocol=this.protocolFactory.get();
         final NonBlockingConnectionHandler<T> handler = new NonBlockingConnectionHandler<>(
                 readerFactory.get(),
                 protocolFactory.get(),
                 clientChan,
-                this);
-
-        //TODO Check this!!! INCLUDING THE FIELDS THAT IV'E ADDED
-        this.connections.addConnection(connectionsId.get(),handler);
+                this,connectionsId.intValue());
+        this.connections.addConnection(connectionsId.intValue(),handler);
         connectionsId.incrementAndGet();
+
         clientChan.register(selector, SelectionKey.OP_READ, handler);
     }
 
@@ -128,7 +127,7 @@ public class Reactor<T> implements Server<T> {
             }
         }
 
-	    if (key.isValid() && key.isWritable()) {
+        if (key.isValid() && key.isWritable()) {
             handler.continueWrite();
         }
     }

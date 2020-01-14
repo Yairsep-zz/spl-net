@@ -12,27 +12,27 @@ public class StompServer {
 
     public static void main(String[] args) {
 
-        Library library = new Library();
 //        int port = Integer.parseInt(args[0]);
 //        String typeOfServer = args[1];
 
 //        if (typeOfServer.equals("tpc")) {
-        //TODO check about sending library parameter
-            Server server = Server.threadPerClient(7777,
-                    () -> new StompMessagingProtocolImpl(library),
-                    () -> new MessageEncoderDecoderImpl());
-            server.serve();
+
+//            Server server = Server.threadPerClient(8083,
+//                    () -> new StompMessagingProtocolImpl(),
+//                    () -> new MessageEncoderDecoderImpl());
+//            server.serve();
 //        }
 
 //        if (typeOfServer.equals("reactor")) {
-//            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
-//                    7777,
-//                    () -> new StompMessagingProtocolImpl(library),
-//                    () ->new MessageEncoderDecoderImpl());
-//            server.serve();
-//        }
+            Server server = Server.reactor(Runtime.getRuntime().availableProcessors(),
+                    8083,
+                    () -> new StompMessagingProtocolImpl(),
+                    () ->new MessageEncoderDecoderImpl());
+            server.serve();
+        }
     }
 
-}
+
+//}
 
 

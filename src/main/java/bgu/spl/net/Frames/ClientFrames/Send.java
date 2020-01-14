@@ -23,7 +23,6 @@ public class Send implements ClientFrame {
         Message response;
         response=new Message();
         String subscriptionId = library.getConnectionIdMap().get(connectionId).getTopicToSubscriptioId().get(topic);
-        //TODO CHECK ABOUT THE SUBSCRIPTION!
         String output=response.makeMessageFrame(subscriptionId,this.topic,this.body);
         connections.send(topic,output);
     }

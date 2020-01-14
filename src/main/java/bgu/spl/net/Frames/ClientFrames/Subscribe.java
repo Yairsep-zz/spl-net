@@ -25,7 +25,6 @@ public class Subscribe implements ClientFrame {
 
     public void execute (int connectionId , Library library) throws IOException {
         System.out.println("reached subscribed execute");
-        //TODO check what needed to be done here
         ServerFrame response;
         if(library.getConnectionIdMap().get(connectionId)!=null) {
             User userTemp = library.getConnectionIdMap().get(connectionId);
@@ -41,7 +40,6 @@ public class Subscribe implements ClientFrame {
             response=new Receipt();
             String output=response.makeFrame(this.receipt);
             connections.send(connectionId,output);
-            //TODO CHECK WEHERE TO PRINT THE MESSAGE
         }
 
     }

@@ -10,14 +10,11 @@ import java.io.IOException;
 
 public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> {
 
-    private ConnectionsImpl connections;
+    private ConnectionsImpl connections=ConnectionsImpl.getInstance();
     private int connectionId;
     private boolean shouldTerminate = false;
-    private Library library;
 
-    public StompMessagingProtocolImpl(Library library){
-        this.library=library;
-    }
+    public StompMessagingProtocolImpl(){ }
 
     @Override
     public void start(int connectionId, Connections connections) {
@@ -27,7 +24,7 @@ public class StompMessagingProtocolImpl<T> implements StompMessagingProtocol<T> 
 
     public void process(ClientFrame message) throws IOException {
         message.setConnections(connections);
-        message.execute(connectionId, library);
+        message.execute(connectionId, connections.getLibrary());
 
         if(message instanceof Disconnect){
             shouldTerminate=true;

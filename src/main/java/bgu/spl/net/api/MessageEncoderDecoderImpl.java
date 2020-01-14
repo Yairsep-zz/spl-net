@@ -24,8 +24,6 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
 
     @Override
     public byte[] encode(T message) {
-        //@TODO CHECK ABOUT CASES
-
         return ((String)message).getBytes();
     }
 

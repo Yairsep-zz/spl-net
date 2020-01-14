@@ -11,6 +11,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
 
@@ -22,16 +23,19 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
     private final Queue<ByteBuffer> writeQueue = new ConcurrentLinkedQueue<>();
     private final SocketChannel chan;
     private final Reactor reactor;
+    private ConnectionsImpl connections=ConnectionsImpl.getInstance();
+
 
     public NonBlockingConnectionHandler(
             MessageEncoderDecoder<T> reader,
             StompMessagingProtocolImpl<T> protocol,
             SocketChannel chan,
-            Reactor reactor) {
+            Reactor reactor, int counterConnectionsID) {
         this.chan = chan;
         this.encdec = reader;
         this.protocol = protocol;
         this.reactor = reactor;
+        protocol.start(counterConnectionsID,connections);
     }
 
     public Runnable continueRead() {
@@ -56,11 +60,7 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            //TODO Check if needed
-//                            if (response != null) {
-//                                writeQueue.add(ByteBuffer.wrap(encdec.encode(response)));
-//                                reactor.updateInterestedOps(chan, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-//                            }
+
                         }
                     }
                 } finally {
@@ -125,7 +125,6 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
 
     @Override
     public void send(T msg) {
-
         if (msg!=null){
             writeQueue.add(ByteBuffer.wrap(encdec.encode(msg)));
             reactor.updateInterestedOps(chan, SelectionKey.OP_READ | SelectionKey.OP_WRITE);

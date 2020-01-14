@@ -8,6 +8,9 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     private static ConnectionsImpl connections_instance = null;
     private ConcurrentHashMap<Integer, ConnectionHandler<T>> connectionsById;
+
+
+
     private Library library;
 
     public static ConnectionsImpl getInstance()
@@ -17,9 +20,10 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
         return connections_instance;
     }
-    //TODO CHECK ABOUT SWITCHING THE ADDAING OF A NEW CONNECTION HANDLER TO HERE INSTDE OF THE BASE SERVER AND REACTOR
+
     public ConnectionsImpl() {
         connectionsById = new ConcurrentHashMap<>();
+        this.library=new Library();
     }
 
     //Sending message to client
@@ -34,11 +38,12 @@ public class ConnectionsImpl<T> implements Connections<T> {
 
     //Sending frame to whole topic
     public void send(String topic, T msg) throws IOException {
+        if(library.SubscribersToTopicsMap.get(topic)!=null){
         ConcurrentLinkedQueue<User> byTopic=library.SubscribersToTopicsMap.get(topic);
         for (User user:byTopic) {
-            int id=user.getConnectionId();
-            send(id,msg);
-
+            int id = user.getConnectionId();
+            send(id, msg);
+        }
         }
     }
 
@@ -57,5 +62,8 @@ public class ConnectionsImpl<T> implements Connections<T> {
     }
     public ConcurrentHashMap<Integer, ConnectionHandler<T>> getConnections(){
         return this.connectionsById;
+    }
+    public Library getLibrary() {
+        return library;
     }
 }

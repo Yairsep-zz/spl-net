@@ -17,9 +17,8 @@ public abstract class BaseServer<T> implements Server<T> {
     private final Supplier<MessageEncoderDecoder<T>> encdecFactory;
     private ServerSocket sock;
     private AtomicInteger connectionsId;
-    private ConnectionsImpl connections;
-    private  StompMessagingProtocolImpl stompMessagingProtocol;
-    private ConnectionsImpl connectionsImpl=ConnectionsImpl.getInstance();
+    private ConnectionsImpl connections=ConnectionsImpl.getInstance();
+
 
 
     public BaseServer(
@@ -32,12 +31,11 @@ public abstract class BaseServer<T> implements Server<T> {
         this.encdecFactory = encdecFactory;
 		this.sock = null;
 		connectionsId=new AtomicInteger(0);
-//		connections=new ConnectionsImpl();
+
     }
 
     @Override
     public void serve() {
-        connections=new ConnectionsImpl();
         try (ServerSocket serverSock = new ServerSocket(port)) {
 			System.out.println("Server started");
 
@@ -47,16 +45,13 @@ public abstract class BaseServer<T> implements Server<T> {
 
                 Socket clientSock = serverSock.accept();
                 System.out.println("got a new Client");
-                //Start protocol
-//                stompMessagingProtocol=protocolFactory.get();
-//                stompMessagingProtocol.start(connectionsId.intValue(),connectionsImpl);
+
 
                 BlockingConnectionHandler<T> handler = new BlockingConnectionHandler<>(clientSock,
                         encdecFactory.get(),
                         protocolFactory.get(),
                         connectionsId.intValue(),
                         connections);
-                //TODO Check this!!! INCLUDING THE FIELDS THAT IV'E ADDED
 
                 this.connections.addConnection(connectionsId.intValue(),handler);
                 int newVal,oldVal;
