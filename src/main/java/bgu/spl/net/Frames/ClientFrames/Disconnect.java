@@ -18,7 +18,6 @@ public class Disconnect implements ClientFrame {
     }
 
     public void execute(int connectionId, Library library) throws IOException {
-        System.out.println("reached disconnect execute");
         ServerFrame response;
 
         //Removing from Library
@@ -26,13 +25,6 @@ public class Disconnect implements ClientFrame {
             User user=library.getConnectionIdMap().get(connectionId);
             user.setActive(false);
             library.getSubscribersToTopicsMap().remove(user);
-//            Iterator<String> topicsIterator = library.getSubscribersToTopicsMap().keySet().iterator();
-//            while (topicsIterator.hasNext()) {
-//                User tempUser = library.getConnectionIdMap().get(connectionId);
-//                if (library.getSubscribersToTopicsMap().get(topicsIterator).contains(tempUser)) {
-//                    library.getSubscribersToTopicsMap().get(topicsIterator).remove(tempUser);
-//                }
-//            }
             response = new Receipt();
             String output=response.makeFrame(this.receipt);
             connections.send(connectionId, output);

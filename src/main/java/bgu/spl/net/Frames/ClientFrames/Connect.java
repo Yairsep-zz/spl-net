@@ -24,7 +24,6 @@ public class Connect implements ClientFrame {
 
     @Override
     public void  execute(int connectionId, Library library) throws IOException {
-        System.out.println("reached connect execute");
         ServerFrame response;
         //Todo check if the server connection was succsesful
         //New User

@@ -15,7 +15,6 @@ public class MessageEncoderDecoderImpl<T> implements MessageEncoderDecoder<T> {
     public T decodeNextByte(byte nextByte) {
 
         if(nextByte == '\u0000'){
-            System.out.println("found a Frame");
             return (T)popString();
         }
         pushByte(nextByte);

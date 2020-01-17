@@ -19,7 +19,6 @@ public class Send implements ClientFrame {
 
     @Override
     public void execute(int connectionId, Library library) throws IOException {
-        System.out.println("reached send execute");
         Message response;
         response=new Message();
         String subscriptionId = library.getConnectionIdMap().get(connectionId).getTopicToSubscriptioId().get(topic);
